@@ -1,0 +1,16 @@
+{
+  "name": "project_cyto_js",
+  "version": "1.0.0",
+  "description": "test for cyto js for trade",
+  "main": "code.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "simon",
+  "license": "ISC",
+  "dependencies": {
+    "cytoscape": "^3.22.1",
+    "cytoscape-pptx": "^0.6.1",
+    "pptxgenjs": "^3.10.0"
+  }
+}
