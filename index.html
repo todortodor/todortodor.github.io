@@ -7,15 +7,7 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://unpkg.com/cytoscape@3.15.2/dist/cytoscape.min.js"></script>
-    <script src="https://unpkg.com/jquery@3.5.1/dist/jquery.js"></script>
-    <script src="https://unpkg.com/cytoscape-panzoom@2.5.3/cytoscape-panzoom.js"></script>
-    <link href="https://unpkg.com/cytoscape-panzoom@2.5.3/cytoscape.js-panzoom.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
-    <script src="https://unpkg.com/cytoscape-edgehandles@3.6.0/cytoscape-edgehandles.js"></script>
-    <script src="https://unpkg.com/cytoscape-lasso@1.1.4/dist/cytoscape-lasso.min.js"></script>
     <script src="https://unpkg.com/cytoscape-mapbox-gl@1.2.0/dist/cytoscape-mapbox-gl.js"></script>
-    <script src="../dist/cytoscape-mapbox-gl.js"></script>
     <style>
         body {
             margin: 0;
@@ -28,46 +20,78 @@
             top: 0px;
             left: 0px;
         }
-        
+
         #controls {
             position: absolute;
-            top: 0px;
+            top: 55px;
             left: 50px;
-        }
-
-        .hide {
-            display: none;
-        }
-
-        #input {
-            color: #c88;
-            font-size: 1em;
-            position: absolute;
-            z-index: 1;
-            left: 10em;
-            top: 10em;
         }
     </style>
 </head>
 
 <body>
-    <!-- <form action="">
-        <label for="fname">Carbon tax value in $/ton:</label><br>
-        <input type="number" id="ctax" name="tax" value="100"><br>
-        <input type="submit" value="Submit">
-    </form> -->
-    <!-- <div id="graph"></div> -->
     <div id="graph"></div>
     <div id="controls">
-        <button id="mode">Toggle Map</button>
-        <select id="basemap" class="hide">
+        <select id="basemap">
             <option value="vector">Vector</option>
             <option value="raster">Raster</option>
         </select>
-        <div style="height: 10px"></div>
-    </div>
+        <select id="mapOrNetwork">
+            <option value="map">Map</option>
+            <option value="network">Network</option>
+        </select>
+        <select id="sector">
+            <option value="total"> Total</option>
+            <option value="01T02"> Agriculture</option>
+            <option value="03"> Fishing</option>
+            <option value="05T06"> Mining, energy</option>
+            <option value="07T08"> Mining, non-energy</option>
+            <option value="10T12"> Food products</option>
+            <option value="13T15"> Textiles</option>
+            <option value="16"> Wood</option>
+            <option value="17T18"> Paper</option>
+            <option value="19"> Coke, petroleum</option>
+            <option value="20"> Chemicals</option>
+            <option value="21"> Pharmaceuticals</option>
+            <option value="22"> Plastics</option>
+            <option value="23"> Non-metallic minerals</option>
+            <option value="24"> Basic metals</option>
+            <option value="25"> Fabricated metals</option>
+            <option value="26"> Electronic</option>
+            <option value="27"> Electrical equipment</option>
+            <option value="28"> Machinery</option>
+            <option value="29T30"> Transport equipments</option>
+            <option value="31T33"> Manufacturing nec</option>
+            <option value="35"> Energy</option>
+            <option value="36T39"> Water supply</option>
+            <option value="41T43"> Construction</option>
+            <option value="45T47"> Wholesale, retail</option>
+            <option value="49"> Land transport</option>
+            <option value="50"> Water transport</option>
+            <option value="51"> Air transport</option>
+            <option value="52"> Warehousing</option>
+            <option value="53"> Post</option>
+            <option value="55T56"> Tourism</option>
+            <option value="58T60"> Media</option>
+            <option value="61"> Telecom</option>
+            <option value="62T63"> IT</option>
+            <option value="64T66"> Finance, insurance</option>
+            <option value="68"> Real estate</option>
+            <option value="69T75"> R&D</option>
+            <option value="77T82"> Administration</option>
+            <option value="84"> Public sector</option>
+            <option value="85"> Education</option>
+            <option value="86T88"> Health</option>
+            <option value="90T93"> Entertainment</option>
+            <option value="94T98"> Other service</option>
+        </select>
+        <button type="reset-view">Reset view</button>
 
+        <div style="height: 100px"></div>
+    </div>
     <script src="code.js"></script>
+
+
 </body>
 
 </html>
