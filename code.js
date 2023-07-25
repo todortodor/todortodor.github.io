@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', async () => {
-    const { nodes, edges } = await (await fetch('data/graph_CHN.json')).json();
+    const { nodes, edges } = await (await fetch('data/graph_USA.json')).json();
     const elements = [
         ...nodes.map(node => ({ group: 'nodes', data: node, position: { x: node.lng, y: -node.lat } })),
         ...edges.map(edge => ({ group: 'edges', data: edge })),
