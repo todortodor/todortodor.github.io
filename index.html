@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>UZH trade analysis</title>
+    <title>Analysis of tariffs scenario</title>
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://unpkg.com/cytoscape@3.15.2/dist/cytoscape.min.js"></script>
@@ -47,6 +47,22 @@
             <option value="map">Map</option>
             <option value="network">Network</option>
         </select>
+        <select id="TradeOf">
+            <option value="AllWorld">World </option>
+            <option value="NorOnly"> Norway</option>
+        </select><br><br>
+        <select id="Scenario">
+            <option value="US10">US10</option>
+            <option value="US1060">US1060</option>
+            <option value="US2060">US2060</option>
+            <option value="US1060EU0">US1060EU0</option>
+            <option value="US10Sectors">US10Sectors</option>
+            <option value="US10Retal">US10Retal</option>
+            <option value="US1060Retal">US1060Retal</option>
+            <option value="US2060Retal">US2060Retal</option>
+            <option value="US1060EU0Retal">US1060EU0Retal</option>
+            <option value="US10SectorsRetal">US10SectorsRetal</option>
+        </select><br><br>
         <select id="sector">
             <option value="total"> Total</option>
             <option value="01T02"> Agriculture</option>
