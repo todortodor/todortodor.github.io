@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', async () => {
-    const { nodes, edges } = await (await fetch('graph.json')).json();
+    const { nodes, edges } = await (await fetch('data/graph.json')).json();
     const elements = [
         ...nodes.map(node => ({ group: 'nodes', data: node, position: { x: node.lng, y: -node.lat } })),
         ...edges.map(edge => ({ group: 'edges', data: edge })),
@@ -10,17 +10,17 @@ window.addEventListener('DOMContentLoaded', async () => {
             style: {
                 'border-color': '#ffffff',
                 'border-width': 2,
-                'background-color': "mapData(AllWorldUS10totalHatColor, 0, 1, red, green)",
+                'background-color': "mapData(totalHatColor, 0, 1, red, green)",
                 'color': 'white',
                 'label': 'data(id)',
                 'text-valign': 'center',
                 'text-halign': 'center',
                 'text-background-opacity': 0,
                 'text-background-padding': 4,
-                "width": "mapData(AllWorldUS10totalValueSize, 0, 1, 20, 200)",
-                "height": "mapData(AllWorldUS10totalValueSize, 0, 1, 20, 200)",
+                "width": "mapData(totalValueSize, 0, 1, 20, 200)",
+                "height": "mapData(totalValueSize, 0, 1, 20, 200)",
                 'opacity': 0.9,
-                'font-size': "mapData(AllWorldUS10totalValueSize, 0, 1, 10, 50)",
+                'font-size': "mapData(totalValueSize, 0, 1, 10, 50)",
                 'overlay-opacity': 0,
             }
         },
@@ -35,14 +35,14 @@ window.addEventListener('DOMContentLoaded', async () => {
         {
             selector: 'edge',
             style: {
-                'line-color': "mapData(AllWorldUS10totalHatColor, 0, 1, red, green)",
-                'width': "mapData(AllWorldUS10totalValueSize, 0, 1, 0, 20)",
+                'line-color': "mapData(totalHatColor, 0, 1, red, green)",
+                'width': "mapData(totalValueSize, 0, 1, 0, 20)",
                 'curve-style': 'unbundled-bezier',
-                'opacity': "mapData(AllWorldUS10totalValueSize, 0, 1, 0.5, 1)",
+                'opacity': "mapData(totalValueSize, 0, 1, 0.5, 1)",
                 'target-arrow-shape': 'triangle-backcurve',
                 'source-arrow-shape': 'circle',
-                'target-arrow-color': "mapData(AllWorldUS10totalHatColor, 0, 1, red, green)",
-                'source-arrow-color': "mapData(AllWorldUS10totalHatColor, 0, 1, red, green)",
+                'target-arrow-color': "mapData(totalHatColor, 0, 1, red, green)",
+                'source-arrow-color': "mapData(totalHatColor, 0, 1, red, green)",
                 'overlay-opacity': 0,
             }
         },
@@ -71,7 +71,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         initialTemp: 1000,
         minTemp: 1,
         edgeElasticity: function (edge) {
-            return (0.5 / Math.max(edge.data().AllWorldUS10totalShareOutputSource, edge.data().AllWorldUS10totalShareInputTarget)) ** 4
+            return (0.5 / Math.max(edge.data().totalShareOutputSource, edge.data().totalShareInputTarget)) ** 4
         },
         nodeOverlap: 1e9,
         animationThreshold: 400,
@@ -144,12 +144,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('basemap').addEventListener('change', updateBasemap);
 
     cy.nodes().qtip({
-        content: function(){
-//	        let sector = document.getElementById('sector').value;
-//	        let scenario = document.getElementById('Scenario').value;
-//	        let typeOfTrade = document.getElementById('TradeOf').value;
-         return `${this.id()} : Gross output = ${this.data()[document.getElementById('TradeOf').value + document.getElementById('Scenario').value + document.getElementById('sector').value + 'Value']}Mio.\$ <br> Gross output change = ${this.data()[document.getElementById('TradeOf').value + document.getElementById('Scenario').value + document.getElementById('sector').value + 'Hat']}%`
-         },
+        content: function(){ return `${this.id()} : Gross output = ${this.data()[document.getElementById('sector').value + 'Value']}Mio.\$ <br> Gross output change = ${this.data()[document.getElementById('sector').value + 'Hat']}%`},
         position: {
             my: 'top center',
             at: 'bottom center'
@@ -201,25 +196,23 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     const changeSectorStyle = () => {
         const sector = document.getElementById('sector').value;
-        const scenario = document.getElementById('Scenario').value;
-        const typeOfTrade = document.getElementById('TradeOf').value;
         cy.style().fromJson([
             {
                 selector: 'node',
                 style: {
                     'border-color': '#ffffff',
                     'border-width': 2,
-                    'background-color': "mapData(" + typeOfTrade+scenario+sector + "HatColor, 0, 1, red, green)",
+                    'background-color': "mapData(" + sector + "HatColor, 0, 1, red, green)",
                     'color': 'white',
                     'label': 'data(id)',
                     'text-valign': 'center',
                     'text-halign': 'center',
                     'text-background-opacity': 0,
                     'text-background-padding': 4,
-                    "width": "mapData(" + typeOfTrade+scenario+sector + "ValueSize, 0, 1, 20, 200)",
-                    "height": "mapData(" + typeOfTrade+scenario+sector + "ValueSize, 0, 1, 20, 200)",
+                    "width": "mapData(" + sector + "ValueSize, 0, 1, 20, 200)",
+                    "height": "mapData(" + sector + "ValueSize, 0, 1, 20, 200)",
                     // 'opacity': 0.8,
-                    'font-size': "mapData(" + typeOfTrade+scenario+sector + "ValueSize, 0, 1, 10, 50)",
+                    'font-size': "mapData(" + sector + "ValueSize, 0, 1, 10, 50)",
                     'overlay-opacity': 0,
                 }
             },
@@ -234,22 +227,20 @@ window.addEventListener('DOMContentLoaded', async () => {
             {
                 selector: 'edge',
                 style: {
-                    'line-color': "mapData(" + typeOfTrade+scenario+sector + "HatColor, 0, 1, red, green)",
-                    'width': "mapData(" + typeOfTrade+scenario+sector + "ValueSize, 0, 1, 0, 20)",
+                    'line-color': "mapData(" + sector + "HatColor, 0, 1, red, green)",
+                    'width': "mapData(" + sector + "ValueSize, 0, 1, 0, 20)",
                     'curve-style': 'unbundled-bezier',
-                    'opacity': "mapData(" + typeOfTrade+scenario+sector + "ValueSize, 0, 1, 0.5, 1)",
+                    'opacity': "mapData(" + sector + "ValueSize, 0, 1, 0.5, 1)",
                     'target-arrow-shape': 'triangle-backcurve',
                     'source-arrow-shape': 'circle',
-                    'target-arrow-color': "mapData(" + typeOfTrade+scenario+sector + "HatColor, 0, 1, red, green)",
-                    'source-arrow-color': "mapData(" + typeOfTrade+scenario+sector + "HatColor, 0, 1, red, green)",
+                    'target-arrow-color': "mapData(" + sector + "HatColor, 0, 1, red, green)",
+                    'source-arrow-color': "mapData(" + sector + "HatColor, 0, 1, red, green)",
                     'overlay-opacity': 0,
                 }
             },
         ]).update();
     }
     document.getElementById('sector').addEventListener('change', changeSectorStyle);
-    document.getElementById('Scenario').addEventListener('change', changeSectorStyle);
-    document.getElementById('TradeOf').addEventListener('change', changeSectorStyle);
 
     const resetView = () => {
         let state = document.getElementById('mapOrNetwork').value
@@ -283,13 +274,11 @@ window.addEventListener('DOMContentLoaded', async () => {
           }
         let state = document.getElementById('mapOrNetwork').value
         let sector = document.getElementById('sector').value
-        let scenario = document.getElementById('Scenario').value;
-        let typeOfTrade = document.getElementById('TradeOf').value;
         var b64key = 'base64,';
         var b64 = cy.png({bg: true}).substring( cy.png().indexOf(b64key) + b64key.length );
         var imgBlob = b64toBlob( b64, 'image/png' );
         
-        saveAs( imgBlob, `${state}_${typeOfTrade}_${scenario}_${sector}.png` );
+        saveAs( imgBlob, `${state}_${sector}.png` );
         // var png64 = cy.png();
 
         // // put the png data in an img tag
